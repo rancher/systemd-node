@@ -1,0 +1,14 @@
+/.dapper
+/bin
+/dist
+/build
+*.swp
+/.idea
+*.pyc
+__pycache__
+/management-state
+/rancher
+*.pytest_cache
+.kube/
+.vscode/
+.DS_Store

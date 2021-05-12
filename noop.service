@@ -1,0 +1,6 @@
+[Service]
+ExecStart=/usr/bin/journalctl -f
+ExecStopPost=/usr/bin/systemctl exit 1
+StandardInput=tty-force
+StandardOutput=inherit
+StandardError=inherit
