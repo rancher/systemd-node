@@ -1,5 +1,5 @@
 [Service]
-ExecStart=/usr/bin/journalctl -f
+ExecStart=/bin/sh -c "/usr/bin/journalctl -f | grep -v kernel:"
 ExecStopPost=/usr/bin/systemctl exit 1
 StandardInput=tty-force
 StandardOutput=inherit
