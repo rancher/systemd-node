@@ -1,7 +1,6 @@
 FROM opensuse/leap
 RUN zypper mr --disable repo-non-oss repo-update-non-oss && \
     zypper mr --no-refresh repo-oss && \
-    sed -i 's!download.opensuse.org!provo-mirror.opensuse.org!g' /etc/zypp/repos.d/*.repo && \
     zypper ref repo-oss repo-update
 RUN zypper in -y systemd openssh cloud-init vim less jq curl tar gzip
 
@@ -25,6 +24,9 @@ RUN cd /etc/systemd/system/ && \
         cloud-config.service \
         cloud-final.service
  
+# Add k9s
+RUN curl -fL https://github.com/derailed/k9s/releases/download/v0.24.10/k9s_v0.24.10_Linux_x86_64.tar.gz | tar xvzf - -C /usr/bin k9s
+
 # Dummy services
 COPY noop.service noop.target /etc/systemd/system/
 COPY 10_datasource.cfg /etc/cloud/cloud.cfg.d/
