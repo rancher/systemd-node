@@ -1,0 +1,21 @@
+kind: pipeline
+name: amd64
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+  - name: docker
+    image: plugins/docker
+    settings:
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
+      repo: rancher/systemd-node
+      tag: ${DRONE_TAG}
+    when:
+      instance:
+        - drone-publish.rancher.io
+      event: tag
