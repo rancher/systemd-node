@@ -26,6 +26,7 @@ RUN cd /etc/systemd/system/ && \
 
 # Dummy services
 COPY noop.service noop.target /etc/systemd/system/
+COPY DataSourceNoCloudNoMedia.py /usr/lib/python3.6/site-packages/cloudinit/sources
 COPY 10_datasource.cfg /etc/cloud/cloud.cfg.d/
 COPY default_userdata /var/lib/cloud/seed/nocloud/user-data
 COPY env /etc/bash.bashrc.local
