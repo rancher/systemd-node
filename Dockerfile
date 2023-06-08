@@ -23,9 +23,6 @@ RUN cd /etc/systemd/system/ && \
         cloud-init.service \
         cloud-config.service \
         cloud-final.service
- 
-# Add k9s
-RUN curl -fL https://github.com/derailed/k9s/releases/download/v0.26.3/k9s_Linux_x86_64.tar.gz | tar xvzf - -C /usr/bin k9s
 
 # Dummy services
 COPY noop.service noop.target /etc/systemd/system/
