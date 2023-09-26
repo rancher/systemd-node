@@ -10,3 +10,4 @@ mkdir -p /etc/rancher/k3s/config.yaml.d
 
 echo "kubelet-arg+: \"cgroup-root=$root_cgroup\"" > /etc/rancher/rke2/config.yaml.d/49-cgroups-v2-kubelet-root.yaml
 echo "kubelet-arg+: \"cgroup-root=$root_cgroup\"" > /etc/rancher/k3s/config.yaml.d/49-cgroups-v2-kubelet-root.yaml
+
