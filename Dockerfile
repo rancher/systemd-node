@@ -24,6 +24,9 @@ RUN cd /etc/systemd/system/ && \
         cloud-config.service \
         cloud-final.service
 
+COPY prepare-cgroups-v2.sh /
+RUN chmod +x /prepare-cgroups-v2.sh
+
 # Dummy services
 COPY noop.service noop.target /etc/systemd/system/
 COPY DataSourceNoCloudNoMedia.py /usr/lib/python3.6/site-packages/cloudinit/sources
