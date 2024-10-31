@@ -24,6 +24,9 @@ RUN cd /etc/systemd/system/ && \
         cloud-config.service \
         cloud-final.service
 
+COPY prepare-cgroups-v2.sh /
+RUN chmod +x /prepare-cgroups-v2.sh
+
 # Dummy services
 COPY noop.service noop.target /etc/systemd/system/
 COPY DataSourceNoCloudNoMedia.py /usr/lib/python3.6/site-packages/cloudinit/sources
@@ -32,6 +35,13 @@ COPY default_userdata /var/lib/cloud/seed/nocloud/user-data
 COPY env /etc/bash.bashrc.local
 RUN touch /var/lib/cloud/seed/nocloud/meta-data /etc/fstab
 
+COPY default_env /etc/default/rke2-server
+COPY default_env /etc/default/rke2-agent
+COPY default_env /etc/default/k3s
+COPY default_env /etc/default/k3s-agent
+COPY default_env /etc/default/rancher-system-agent
+
 VOLUME /var/lib/kubelet
 VOLUME /var/lib/rancher
 CMD ["/usr/lib/systemd/systemd", "--unit=noop.target", "--show-status=true"]
+
