@@ -1,11 +1,10 @@
-FROM opensuse/leap:15.4
-RUN zypper mr --disable repo-non-oss repo-update-non-oss && \
+FROM opensuse/leap:15.6
+RUN echo "solver.allowVendorChange = true" >> /etc/zypp/zypp.conf && \
+    zypper mr --disable repo-non-oss repo-update-non-oss repo-openh264 && \
     zypper mr --no-refresh repo-oss && \
-    zypper ref repo-oss repo-update
-RUN zypper in -y systemd openssh cloud-init vim less jq curl tar gzip
-
-# Kubernetes deps
-RUN zypper in -y iptables
+    zypper ar https://download.opensuse.org/repositories/security:SELinux/15.6/security:SELinux.repo && \
+    zypper --gpg-auto-import-keys --non-interactive ref repo-oss repo-update security_SELinux
+RUN zypper in -y systemd openssh cloud-init vim less jq curl tar gzip iptables
 
 ENV container=docker
 
