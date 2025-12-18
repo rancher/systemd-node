@@ -4,7 +4,7 @@ RUN echo "solver.allowVendorChange = true" >> /etc/zypp/zypp.conf && \
     zypper mr --no-refresh openSUSE:repo-oss && \
     zypper ar https://download.opensuse.org/repositories/security:SELinux/16.0/security:SELinux.repo && \
     zypper --gpg-auto-import-keys --non-interactive ref openSUSE:repo-oss security_SELinux
-RUN zypper in -y systemd openssh cloud-init vim less jq curl tar gzip iptables
+RUN zypper in -y systemd openssh cloud-init vim less jq curl tar gzip iptables util-linux-systemd
 
 ENV container=docker
 
@@ -28,7 +28,7 @@ RUN chmod +x /prepare-cgroups-v2.sh
 
 # Dummy services
 COPY noop.service noop.target /etc/systemd/system/
-COPY DataSourceNoCloudNoMedia.py /usr/lib/python3.6/site-packages/cloudinit/sources
+COPY DataSourceNoCloudNoMedia.py /usr/lib/python3.13/site-packages/cloudinit/sources/
 COPY 10_datasource.cfg /etc/cloud/cloud.cfg.d/
 COPY default_userdata /var/lib/cloud/seed/nocloud/user-data
 COPY env /etc/bash.bashrc.local
