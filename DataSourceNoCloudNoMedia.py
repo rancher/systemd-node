@@ -11,10 +11,10 @@
 # that does not react to external media. This is specifically to allow ignoring external media based cloud-init data that does not apply to the container (for example, lima)
 
 import errno
+import logging
 import os
 
 from cloudinit import dmi
-from cloudinit import log as logging
 from cloudinit import sources, util
 from cloudinit.net import eni
 
