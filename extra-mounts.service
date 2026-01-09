@@ -1,11 +1,15 @@
 [Unit]
-Name=Extra Mounts
-After=noop.service
+Description=Extra Mounts
 Requires=noop.service
+After=noop.service
+Before=cloud-final.service
 
 [Service]
 Type=oneshot
-ExecStart=/bin/sh -euc "echo 'Checking /sys mount propagation...'; if ! $(grep -q '/sys.*shared' /proc/self/mountinfo) ; then mount --make-shared /sys; echo '/sys mounted as shared'; else echo '/sys already shared'; fi"
-ExecStart=/bin/sh -euc "echo 'Checking /run mount propagation...'; if ! $(grep -q '/run.*shared' /proc/self/mountinfo) ; then mount --make-shared /run; echo '/run mounted as shared'; else echo '/run already shared'; fi"
+ExecStart=/bin/sh -euc "echo 'Checking /sys mount propagation...'; if ! grep -q \" /sys .* shared:\" /proc/self/mountinfo; then mount --make-shared /sys; echo '/sys mounted as shared'; else echo '/sys already shared'; fi"
+ExecStart=/bin/sh -euc "echo 'Checking /run mount propagation...'; if ! grep -q \" /run .* shared:\" /proc/self/mountinfo; then mount --make-shared /run; echo '/run mounted as shared'; else echo '/run already shared'; fi"
 StandardOutput=inherit
 StandardError=inherit
+
+[Install]
+WantedBy=multi-user.target
