@@ -1,2 +1,2 @@
 [Unit]
-Requires=noop.service sshd.service cloud-final.service
+Requires=noop.service sshd.service cloud-final.service extra-mounts.service
