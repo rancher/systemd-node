@@ -27,7 +27,7 @@ COPY prepare-cgroups-v2.sh /
 RUN chmod +x /prepare-cgroups-v2.sh
 
 # Dummy services
-COPY noop.service noop.target /etc/systemd/system/
+COPY noop.service noop.target extra-mounts.service /etc/systemd/system/
 COPY DataSourceNoCloudNoMedia.py /usr/lib/python3.13/site-packages/cloudinit/sources/
 COPY 10_datasource.cfg /etc/cloud/cloud.cfg.d/
 COPY default_userdata /var/lib/cloud/seed/nocloud/user-data
@@ -43,4 +43,3 @@ COPY default_env /etc/default/rancher-system-agent
 VOLUME /var/lib/kubelet
 VOLUME /var/lib/rancher
 CMD ["/usr/lib/systemd/systemd", "--unit=noop.target", "--show-status=true"]
-

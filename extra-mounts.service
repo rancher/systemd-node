@@ -1,0 +1,14 @@
+[Unit]
+Description=Extra Mounts
+Requires=noop.service
+After=noop.service
+Before=cloud-final.service
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -euc "for MOUNT in /run /sys /var/lib/kubelet ; do mount --make-rshared $MOUNT; done"
+StandardOutput=inherit
+StandardError=inherit
+
+[Install]
+WantedBy=multi-user.target
