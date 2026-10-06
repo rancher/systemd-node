@@ -25,6 +25,7 @@ jobs:
     permissions:
       contents: read
       id-token: write
+      packages: write
     steps:
       - name: Checkout code
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
@@ -36,8 +37,8 @@ jobs:
             secret/data/github/repo/${{ github.repository }}/dockerhub/rancher/credentials username | DOCKER_USERNAME ;
             secret/data/github/repo/${{ github.repository }}/dockerhub/rancher/credentials password | DOCKER_PASSWORD
 
-      - name: Build and push image
-        uses: rancher/ecm-distro-tools/actions/publish-image@9184db604470b8956e9b8e3ca4db7262676a2364 # master 2026-04-09
+      - name: Build and push image [Docker Hub]
+        uses: rancher/ecm-distro-tools/actions/publish-image@e72fccc212c7179d2ff65d173371d8183e95453e # v0.77.7
         with:
           image: systemd-node
           tag: ${{ github.ref_name }}
@@ -47,6 +48,22 @@ jobs:
           public-repo: rancher
           public-username: ${{ env.DOCKER_USERNAME }}
           public-password: ${{ env.DOCKER_PASSWORD }}
+          make-target: push-image
+
+          push-to-prime: false
+
+      - name: Build and push image [GHCR]
+        uses: rancher/ecm-distro-tools/actions/publish-image@e72fccc212c7179d2ff65d173371d8183e95453e # v0.77.7
+        with:
+          image: systemd-node
+          tag: ${{ github.ref_name }}
+          platforms: linux/amd64,linux/arm64
+          skip-buildx-setup: true
+
+          public-registry: ghcr.io
+          public-repo: ${{ github.repository_owner }}
+          public-username: ${{ github.repository_owner }}
+          public-password: ${{ secrets.GITHUB_TOKEN }}
           make-target: push-image
 
           push-to-prime: false
