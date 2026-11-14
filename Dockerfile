@@ -1,8 +1,8 @@
-FROM opensuse/leap:16.0
+FROM opensuse/leap:16.1
 RUN echo "solver.allowVendorChange = true" >> /etc/zypp/zypp.conf && \
     zypper mr --disable openSUSE:repo-non-oss openSUSE:repo-openh264 && \
     zypper mr --no-refresh openSUSE:repo-oss && \
-    zypper ar https://download.opensuse.org/repositories/security:SELinux/16.0/security:SELinux.repo && \
+    zypper ar https://download.opensuse.org/repositories/security:SELinux/16.1/security:SELinux.repo && \
     zypper --gpg-auto-import-keys --non-interactive ref openSUSE:repo-oss security_SELinux
 RUN zypper in -y systemd openssh cloud-init vim less jq curl tar gzip iptables util-linux-systemd
 
